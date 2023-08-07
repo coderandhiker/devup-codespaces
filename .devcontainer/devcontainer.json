@@ -12,7 +12,7 @@
 	"forwardPorts": [3000, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "chmod +x ./.devcontainer/setup.sh && ./.devcontainer/setup.sh",
+	"postCreateCommand": "./.devcontainer/setup.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {
