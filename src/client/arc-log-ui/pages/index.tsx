@@ -1,25 +1,30 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react';
+import os from 'os';
 
-function index() {
-
-  const [message, setMessage] = useState("Loading...");
+function Index() {
+  const [message, setMessage] = useState('Loading...');
   const [appRoles, setAppRoles] = useState([]);
 
-  useEffect(() => {
-    fetch("https://super-lamp-965566vvjr72x96p-8080.app.github.dev/api/home")
+  // our API runs on 8080, swap the port for the server URL 
+  // shown here for demo - use getServerSideProps in real use 
+  const serverURL = 'https://' + os.hostname().replace('-3000', '-8080')
+  
+  console.log(serverURL)
+  useEffect(() => {    
+    fetch(serverURL + '/api/home')
       .then((response) => response.json())
       .then((data) => {
-          setMessage(data.message);
-        });
-  }, [])
+        setMessage(data.message);
+      });
+  }, [serverURL]);
 
   useEffect(() => {
-    fetch("https://super-lamp-965566vvjr72x96p-8080.app.github.dev/api/roles")
+    fetch(serverURL + '/api/roles')
       .then((response) => response.json())
-      .then((data) => {        
+      .then((data) => {
         setAppRoles(data.app_roles);
-      })
-  }, []);
+      });
+  }, [serverURL]);
 
   return (
     <div>
@@ -28,9 +33,8 @@ function index() {
       {appRoles.map((role, index) => (
         <div key={index}>{role}</div>
       ))}
-        
     </div>
   );
 }
 
-export default index
+export default Index;
